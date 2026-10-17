@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenAir — Open-source smart HEPA air purifier you can 3D-print</title>
+<meta name="description" content="OpenAir is a 3D-printed, ESP32-S3 smart HEPA air purifier. Sub-A$200 builds, cheap off-the-shelf filters, Home Assistant control, fully open source. Melbourne, Australia.">
+<meta property="og:title" content="OpenAir — Open-source smart HEPA air purifier">
+<meta property="og:description" content="A 3D-printed ESP32 air purifier with feature parity to the Levoit Core 400S and Xiaomi 4 — open CAD, open firmware, A$18 filters.">
+<meta property="og:image" content="assets/hero-cover.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%230e7a6c'/%3E%3Cpath d='M18 26h28M18 34h28M18 42h20' stroke='%23fff' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+:root{
+  --ink:#16232b; --ink-soft:#4d616e; --paper:#f6f8f7; --card:#ffffff;
+  --accent:#0e7a6c; --accent-soft:#e3f2ef; --line:#dde5e3; --amber:#b45f06;
+  --radius:14px; --maxw:1120px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink);background:var(--paper);line-height:1.6;font-size:16.5px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+img{max-width:100%;display:block;border-radius:10px}
+
+/* nav */
+nav{position:sticky;top:0;background:rgba(246,248,247,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);z-index:50}
+nav .wrap{display:flex;align-items:center;gap:26px;height:62px}
+.logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:20px;letter-spacing:.02em;
+  color:var(--ink);text-decoration:none}
+.logo svg{width:28px;height:28px}
+nav ul{display:flex;gap:20px;list-style:none;margin-left:auto}
+nav ul a{color:var(--ink-soft);text-decoration:none;font-weight:600;font-size:14.5px}
+nav ul a:hover{color:var(--accent)}
+.ghbtn{background:var(--ink);color:#fff!important;padding:8px 14px;border-radius:8px;font-size:13.5px}
+.ghbtn:hover{background:var(--accent)!important}
+.burger{display:none;margin-left:auto;background:none;border:0;font-size:24px;cursor:pointer;color:var(--ink)}
+
+/* hero */
+header.hero{padding:64px 0 40px;text-align:center}
+.hero h1{font-size:clamp(30px,5vw,52px);line-height:1.12;letter-spacing:-.01em;max-width:820px;margin:0 auto}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p.sub{max-width:640px;margin:18px auto 26px;color:var(--ink-soft);font-size:18px}
+.badge{display:inline-flex;gap:8px;align-items:center;background:var(--accent-soft);color:var(--accent);
+  border:1px solid #bcded7;border-radius:99px;padding:7px 16px;font-size:13.5px;font-weight:700}
+.badge .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.hero .cover{margin:34px auto 0;max-width:900px}
+.cta-row{display:flex;gap:12px;justify-content:center;margin-top:26px;flex-wrap:wrap}
+.btn{display:inline-block;padding:13px 24px;border-radius:10px;font-weight:700;text-decoration:none;
+  font-size:15.5px;transition:transform .15s}
+.btn.primary{background:var(--accent);color:#fff}
+.btn.primary:hover{transform:translateY(-2px)}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+
+/* sections */
+section{padding:58px 0}
+section h2{font-size:clamp(24px,3.4vw,34px);letter-spacing:-.01em;margin-bottom:10px}
+section .lede{color:var(--ink-soft);max-width:720px;margin-bottom:30px}
+.kicker{text-transform:uppercase;letter-spacing:.14em;font-size:12.5px;font-weight:800;color:var(--accent);margin-bottom:10px}
+
+/* builds */
+.builds{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.build{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;
+  display:flex;flex-direction:column;gap:12px}
+.build img{aspect-ratio:14/11;object-fit:cover}
+.build h3{font-size:20px}
+.build .price{font-weight:800;color:var(--accent);font-size:18px}
+.build ul{list-style:none;color:var(--ink-soft);font-size:14.5px;display:grid;gap:6px}
+.build ul li::before{content:"·";margin-right:7px;color:var(--accent);font-weight:800}
+
+/* why */
+.why{background:var(--ink);color:#eef4f2;border-radius:20px;padding:46px;margin-top:10px}
+.why h2{color:#fff}
+.why .lede{color:#a9bfc4}
+.why-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:34px;align-items:center}
+.why .stat{background:#20313c;border:1px solid #2f4453;border-radius:12px;padding:18px 20px;margin-top:12px}
+.why .stat b{color:#7fd4c4;font-size:22px}
+.why .stat span{display:block;color:#a9bfc4;font-size:14px}
+.why img{border:1px solid #2f4453}
+
+/* features */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.feat .ic{width:38px;height:38px;border-radius:9px;background:var(--accent-soft);display:flex;
+  align-items:center;justify-content:center;font-size:19px;margin-bottom:12px}
+.feat h3{font-size:17px;margin-bottom:6px}
+.feat p{color:var(--ink-soft);font-size:14.5px}
+
+/* compare table */
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:var(--radius);
+  overflow:hidden;border:1px solid var(--line);font-size:14.5px}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line)}
+th{background:#eef3f1;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft)}
+tr.ours td{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+.note{font-size:13px;color:var(--ink-soft);margin-top:10px}
+
+/* gallery */
+.gal{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.gal figure{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px}
+.gal figcaption{font-size:12.5px;color:var(--ink-soft);padding:6px 4px 2px;text-align:center}
+
+/* specs + faq accordions */
+.acc{border:1px solid var(--line);border-radius:var(--radius);background:var(--card);overflow:hidden}
+.acc + .acc{margin-top:10px}
+.acc button{width:100%;text-align:left;background:none;border:0;padding:16px 20px;font-size:16px;
+  font-weight:700;color:var(--ink);cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.acc button::after{content:"+";font-size:20px;color:var(--accent);transition:transform .2s}
+.acc.open button::after{transform:rotate(45deg)}
+.acc .body{display:none;padding:0 20px 18px;color:var(--ink-soft);font-size:15px}
+.acc.open .body{display:block}
+.acc .body table{margin-top:4px}
+
+/* status */
+.status{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--amber);
+  border-radius:var(--radius);padding:24px}
+.status h3{margin-bottom:8px}
+.status ul{margin:10px 0 0 18px;color:var(--ink-soft)}
+.status li{margin-bottom:6px}
+
+/* footer */
+footer{background:var(--ink);color:#a9bfc4;padding:44px 0 30px;margin-top:60px}
+footer .cols{display:grid;grid-template-columns:2fr 1fr 1fr;gap:30px}
+footer h5{color:#fff;font-size:14px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+footer a{color:#a9bfc4;text-decoration:none}
+footer a:hover{color:#7fd4c4}
+footer ul{list-style:none;display:grid;gap:8px;font-size:14.5px}
+footer .fine{margin-top:30px;padding-top:18px;border-top:1px solid #2f4453;font-size:13px}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.rv.in{opacity:1;transform:none}
+
+@media(max-width:900px){
+  .builds,.feat-grid{grid-template-columns:1fr 1fr}
+  .gal{grid-template-columns:1fr 1fr}
+  .why-grid{grid-template-columns:1fr}
+  footer .cols{grid-template-columns:1fr 1fr}
+}
+@media(max-width:620px){
+  nav ul{display:none;position:absolute;top:62px;left:0;right:0;background:var(--paper);
+    border-bottom:1px solid var(--line);flex-direction:column;padding:14px 22px;gap:12px}
+  nav ul.open{display:flex}
+  .burger{display:block}
+  .builds,.feat-grid{grid-template-columns:1fr}
+  .why{padding:28px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="/">
+      <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="#0e7a6c"/><path d="M18 26h28M18 34h28M18 42h20" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>
+      OpenAir
+    </a>
+    <button class="burger" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+    <ul id="menu">
+      <li><a href="#builds">Builds</a></li>
+      <li><a href="#why">Why it works</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#compare">Compare</a></li>
+      <li><a href="#specs">Specs</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#status">Status</a></li>
+      <li><a href="/shop/" style="color:var(--accent)">Shop</a></li>
+      <li><a class="ghbtn" href="#docs">Docs &amp; source</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="badge rv"><span class="dot"></span>CAD + firmware verified · physical prototype in build</div>
+    <h1 class="rv">A smart HEPA air purifier<br>you can <em>print yourself</em>.</h1>
+    <p class="sub rv">OpenAir is an open-source, 3D-printed air purifier with the features of a Levoit Core 400S or
+    Xiaomi Smart Air Purifier 4 — auto mode, laser particle sensor, Home Assistant control — built from
+    off-the-shelf parts for under A$200, with A$18 replacement filters.</p>
+    <div class="cta-row rv">
+      <a class="btn primary" href="OpenAir-Design.pdf">Read the design document (PDF)</a>
+      <a class="btn ghost" href="#builds">See the three builds</a>
+    </div>
+    <img class="cover rv" src="assets/hero-cover.png" alt="The three OpenAir builds: Side Table, Value Tower and Reference Tower">
+  </div>
+</header>
+
+<section id="builds">
+  <div class="wrap">
+    <div class="kicker rv">Three builds</div>
+    <h2 class="rv">One machine, three personalities</h2>
+    <p class="lede rv">All three share the same filter, blower concept, safety interlock and firmware. Pick the look and the airflow.</p>
+    <div class="builds">
+      <div class="build rv">
+        <img src="assets/sidetable-a.png" alt="OpenAir Side Table with fabric sleeve">
+        <h3>Side Table</h3>
+        <div class="price">~A$195</div>
+        <ul>
+          <li>Blueair-Signature-style squircle with a fabric sleeve</li>
+          <li>The sleeve is the 360° intake <em>and</em> a washable pre-filter</li>
+          <li>~245 m³/h estimated CADR · flat top takes a plant or a lamp</li>
+          <li>250 × 250 × 443 mm · light line + touch pads on the front</li>
+        </ul>
+      </div>
+      <div class="build rv">
+        <img src="assets/tower-cutaway.png" alt="OpenAir Value Tower cutaway">
+        <h3>Value Tower</h3>
+        <div class="price">~A$194</div>
+        <ul>
+          <li>Ø240 tower, perforated shell, top grille</li>
+          <li>160 mm 24 V EC centrifugal blower, PWM controlled</li>
+          <li>~245 m³/h estimated CADR · PMS5003 laser PM sensor</li>
+          <li>Runs from a USB-C PD charger you already own</li>
+        </ul>
+      </div>
+      <div class="build rv">
+        <img src="assets/tower-exploded.png" alt="OpenAir Reference Tower exploded view">
+        <h3>Reference Tower</h3>
+        <div class="price">~A$817</div>
+        <ul>
+          <li>ebm-papst R1G190 blower — datasheet-verified airflow</li>
+          <li>~445 m³/h estimated CADR · 35–40 m² at 4.6 air changes/h</li>
+          <li>SEN66 sensor: PM1–10, CO₂, VOC, NOx, temp, humidity</li>
+          <li>Round colour TFT display + 24-LED ring</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="why rv">
+      <div class="why-grid">
+        <div>
+          <div class="kicker" style="color:#7fd4c4">Why most DIY purifiers fail</div>
+          <h2>Computer fans can't push through a HEPA cartridge.</h2>
+          <p class="lede">A computer fan is axial: lots of air, almost no pressure. That works for a Corsi-Rosenthal box
+          with half a square metre of flat filter — but a published smoke-decay test of PC fans on a cylindrical HEPA
+          cartridge measured about <b>16 m³/h</b>. A Xiaomi-style cartridge needs 135–160 Pa at its working point;
+          an axial PC fan tops out near 100 Pa.</p>
+          <p class="lede" style="margin-top:14px">Every commercial purifier solves this with a <b>backward-curved centrifugal blower</b>.
+          OpenAir uses the same class of fan — EC-controlled, PWM speed from the ESP32, tachometer feedback —
+          so the pressure curve actually matches the filter.</p>
+          <div class="stat"><b>~245–445 m³/h</b><span>estimated CADR across the builds — measured values will be published before shipping</span></div>
+        </div>
+        <img src="assets/gallery-08.png" alt="OpenAir tower head section with centrifugal blower">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <div class="kicker rv">Feature parity</div>
+    <h2 class="rv">What the mid-range commercial units do — and what OpenAir adds</h2>
+    <p class="lede rv">Auto mode, sleep/turbo, child lock, timers, filter-life tracking, laser PM sensor, app control — plus two safety features most commercial units don't have.</p>
+    <div class="feat-grid">
+      <div class="feat rv"><div class="ic">🌀</div><h3>Auto mode that doesn't hunt</h3><p>Smoothed PM2.5 sets the speed. Steps up fast, down slowly, configurable quiet ceiling, optional full stop when the air is clean.</p></div>
+      <div class="feat rv"><div class="ic">🛰️</div><h3>Laser particle sensor</h3><p>PM1 / PM2.5 / PM10 on the value build. The reference build adds CO₂, VOC, NOx, temperature and humidity via the Bosch SEN66.</p></div>
+      <div class="feat rv"><div class="ic">🏠</div><h3>Home Assistant native</h3><p>ESPHome firmware: sensors, switches, number, select, light and siren entities, plus a local web UI. No cloud, no vendor app. Every feature also works standalone on the touch pads.</p></div>
+      <div class="feat rv"><div class="ic">⏳</div><h3>Filter life, counted twice</h3><p>Tracks the air volume actually processed <em>and</em> calendar age — whichever runs out first. Alert at 10%, reset with a 5-second hold.</p></div>
+      <div class="feat rv"><div class="ic">🧲</div><h3>Safety interlock</h3><p>A hall sensor and magnet in the twist-off base stop the blower the moment the base comes off. No exposed spinning impeller.</p></div>
+      <div class="feat rv"><div class="ic">📢</div><h3>Stall detection + audible feedback</h3><p>The blower's tachometer reports a fault instead of stalling silently. Piezo beeps on every touch.</p></div>
+      <div class="feat rv"><div class="ic">👆</div><h3>Touch through plastic</h3><p>Five capacitive pads work through the printed shell: power, mode, speed, timer, lock. Child lock by holding the lock pad for 3 seconds.</p></div>
+      <div class="feat rv"><div class="ic">💡</div><h3>Air-quality light</h3><p>Six-colour LED ring or light line, auto-dimmed by an ambient light sensor. Becomes a speed bar graph after each touch.</p></div>
+      <div class="feat rv"><div class="ic">🚫</div><h3>What we left out — on purpose</h3><p>No ionisers, no plasma, no UV-C. They generate ozone and by-products. A real H13 HEPA cartridge does the particulate job better.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="wrap">
+    <div class="kicker rv">How it compares</div>
+    <h2 class="rv">Against what you can buy in Australia today</h2>
+    <p class="lede rv">CADR figures are each maker's own, measured to different standards — compare them loosely. OpenAir's figures are engineering estimates until the prototype is measured.</p>
+    <div class="rv" style="overflow-x:auto">
+    <table>
+      <tr><th>Model</th><th>CADR m³/h</th><th>Price (AUD)</th><th>Filter (AUD)</th><th>Open source</th></tr>
+      <tr><td>Levoit Core 300S</td><td>258</td><td>199</td><td>49</td><td>No</td></tr>
+      <tr><td>Levoit Core 400S</td><td>433</td><td>299</td><td>79</td><td>No</td></tr>
+      <tr><td>Xiaomi Smart Air Purifier 4</td><td>400</td><td>~250</td><td>47–68</td><td>No</td></tr>
+      <tr><td>Philips PureProtect 3200</td><td>520</td><td>299–329</td><td>141–159</td><td>No</td></tr>
+      <tr><td>IKEA STARKVIND</td><td>55–270</td><td>199</td><td>19 + 25 gas</td><td>No</td></tr>
+      <tr class="ours"><td>OpenAir Value / Side Table</td><td>~245–275 (est.)</td><td>~195 to build</td><td>18–30</td><td>Yes — CAD + firmware</td></tr>
+      <tr class="ours"><td>OpenAir Reference</td><td>~445 (est.)</td><td>~817 to build</td><td>18–30</td><td>Yes — CAD + firmware</td></tr>
+    </table>
+    </div>
+    <p class="note">Prices as of 4 October 2026, from Australian retailer pages. The filter is the point: a widely available Xiaomi 2/3-series compatible cartridge (200 × 293 mm, H13-class HEPA + granular carbon) at A$18–30, sold everywhere, no proprietary lock-in.</p>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="kicker rv">Inside the machine</div>
+    <h2 class="rv">Every part is printed, parametric and documented</h2>
+    <p class="lede rv">OpenSCAD source drives every dimension — change the blower, re-export the inlet ring and bridge. STLs print on a 256 mm bed in PETG.</p>
+    <div class="gal">
+      <figure><img src="assets/gallery-01.png" alt="Side Table exploded"><figcaption>Side Table, exploded</figcaption></figure>
+      <figure><img src="assets/gallery-03.png" alt="Side Table cutaway"><figcaption>Side Table cutaway: fabric → filter → blower → louvres</figcaption></figure>
+      <figure><img src="assets/tower-exploded.png" alt="Tower exploded"><figcaption>Tower, exploded</figcaption></figure>
+      <figure><img src="assets/tower-cutaway.png" alt="Tower cutaway"><figcaption>Tower cutaway: radial intake through the filter</figcaption></figure>
+      <figure><img src="assets/gallery-07.png" alt="Tower head section"><figcaption>Head section: inlet nozzle + centrifugal blower</figcaption></figure>
+      <figure><img src="assets/gallery-09.png" alt="Twist-lock base"><figcaption>Twist-lock base with magnet interlock</figcaption></figure>
+      <figure><img src="assets/gallery-11.png" alt="Head body"><figcaption>Head body: deck, gasket grooves, bridge seats</figcaption></figure>
+      <figure><img src="assets/sidetable-b.png" alt="Side Table frame without sleeve"><figcaption>Side Table frame, sleeve removed</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="specs">
+  <div class="wrap">
+    <div class="kicker rv">Technical specifications</div>
+    <h2 class="rv">The details</h2>
+    <div class="acc rv"><button>Filter</button><div class="body">
+      Xiaomi 2/2S/3/3H/Pro compatible cartridge, 200 × 293 mm. H13-class pleated HEPA (~2 m² of media) + granular activated carbon layer. A$18–30 from AliExpress or eBay 4-packs. Generic cartridges vary in true filtration class — batch results will be published.
+    </div></div>
+    <div class="acc rv"><button>Blower</button><div class="body">
+      Value builds: 160 mm 24 V EC backward-curved plug fan, PWM in + tach out (~A$45). Reference: ebm-papst R1G190-AB27-02, Ø190 impeller, 24 V 51 W, public datasheet curve ≈495 m³/h @ 127 Pa. Operating point against the modelled system curve: ~420–460 m³/h at 135–160 Pa.
+    </div></div>
+    <div class="acc rv"><button>Electronics</button><div class="body">
+      ESP32-S3 DevKitC-1 (N16R8). PMS5003 laser PM sensor (value) or Bosch SEN66 (reference). WS2812B LED ring or light line. 1.28" round TFT on the reference build. Hall sensor + magnet interlock, piezo buzzer, ambient light sensor, five capacitive touch pads. All low-voltage DC — no mains wiring inside the enclosure.
+    </div></div>
+    <div class="acc rv"><button>Power</button><div class="body">
+      Value builds: USB-C PD trigger board at 20 V from a charger you already own (≥45 W recommended; 65 W for headroom). Reference: 24 V 3 A (72 W) brick. Standby well under 1 W.
+    </div></div>
+    <div class="acc rv"><button>Printing</button><div class="body">
+      PETG, 0.4 mm nozzle, no enclosure needed. 1.55–1.94 kg depending on build. Fits a 256 × 256 mm bed. Heat-set M3 inserts recommended for repeated assembly; self-tapping screws work for the first build.
+    </div></div>
+    <div class="acc rv"><button>Firmware &amp; smart home</button><div class="body">
+      ESPHome 2026.9. Home Assistant entities: PM1/2.5/10 sensors, CO₂/VOC/NOx (reference), fan speed number, mode select, filter-life sensors, child-lock switch, timer, light (LED ring), siren (fault alerts). Local web UI included. OTA updates.
+    </div></div>
+    <div class="acc rv"><button>Dimensions &amp; noise</button><div class="body">
+      Side Table 250 × 250 × 443 mm · Towers Ø240 × 467–507 mm. Noise estimates: ~25 dB(A) at sleep, ~50 dB(A) at maximum — to be measured with a Class-2 meter at 1 m and 3 m before shipping.
+    </div></div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="kicker rv">Frequently asked questions</div>
+    <h2 class="rv">FAQ</h2>
+    <div class="acc rv"><button>Do I need a 3D printer?</button><div class="body">For the kit builds, yes — PETG, 0.4 mm nozzle, 256 mm bed. An assembled-and-tested option is planned for the campaign.</div></div>
+    <div class="acc rv"><button>Is it safe? Any mains wiring?</button><div class="body">No mains wiring inside the enclosure. Everything is 24 V or 5 V DC from an off-the-shelf certified (RCM-marked) power brick or USB-C PD charger. The twist-off base has a magnetic safety interlock that stops the blower instantly.</div></div>
+    <div class="acc rv"><button>Why not just PC fans?</button><div class="body">Because of pressure, not airflow. See <a href="#why">Why most DIY purifiers fail</a> above — a published test of PC fans on a cylindrical HEPA cartridge measured ~16 m³/h. The cartridge needs 135–160 Pa; axial fans can't deliver it.</div></div>
+    <div class="acc rv"><button>Do the CADR numbers mean anything yet?</button><div class="body">They are engineering estimates from a modelled system curve, cross-checked against Xiaomi's published power draw. A smoke-decay test on the physical prototype will produce measured numbers, published before anything ships. If the measurement is worse than the model, we say so.</div></div>
+    <div class="acc rv"><button>Does it need Home Assistant?</button><div class="body">No. Every feature works standalone on the touch pads and the local web page. Home Assistant integration is an addition, not a dependency.</div></div>
+    <div class="acc rv"><button>How long do filters last?</button><div class="body">The firmware counts both processed air volume and calendar age. At ~8 h/day on auto, expect 6–12 months depending on your air. Replacement cartridges are A$18–30.</div></div>
+    <div class="acc rv"><button>Is it really open source?</button><div class="body">Yes. CAD under CERN-OHL-S v2, firmware under MIT, documentation under CC BY 4.0. The design files are free whether or not you buy anything — the paid product is the validated parts, shipping and support.</div></div>
+    <div class="acc rv"><button>When can I back it?</button><div class="body">A crowdfunding campaign is planned once the physical prototype is built and measured. Join the waitlist (see below) and we'll email you at launch.</div></div>
+  </div>
+</section>
+
+<section id="status">
+  <div class="wrap">
+    <div class="status rv">
+      <h3>Honest status — where this project actually is</h3>
+      <p>OpenAir is <strong>designed and verified in CAD and firmware compile only</strong>. There is no physical prototype yet, so CADR and noise figures on this page are engineering estimates, not measurements.</p>
+      <ul>
+        <li>✅ 71-page engineering document: system-curve model, circuit schematic, firmware listing, assembly sequence</li>
+        <li>✅ Parametric OpenSCAD source + exported STLs for all three builds</li>
+        <li>✅ ESPHome firmware compiles for all three variants</li>
+        <li>✅ Bill of materials priced in AUD (4 Oct 2026), every line tagged listed vs estimated</li>
+        <li>🔨 Building the physical prototype now — smoke-decay CADR test and dB(A) measurements to follow</li>
+        <li>📣 Campaign launch after the prototype is measured</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="docs">
+  <div class="wrap" style="text-align:center">
+    <div class="kicker rv">Get involved</div>
+    <h2 class="rv">Read it, build it, break it, improve it</h2>
+    <p class="lede rv" style="margin:0 auto 24px">The full design document is free. Questions, build logs, and launch notifications:</p>
+    <div class="cta-row rv">
+      <a class="btn primary" href="OpenAir-Design.pdf">Download the design document</a>
+      <a class="btn primary" href="/shop/">Buy it built — Shop</a>
+      <a class="btn ghost" href="mailto:hello@openair.craftwisp.com?subject=OpenAir%20waitlist">Join the waitlist</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h5>OpenAir</h5>
+        <p style="font-size:14.5px">An open-source smart HEPA air purifier designed in Melbourne, Australia.
+        CAD · firmware · documentation released under open licences.</p>
+      </div>
+      <div>
+        <h5>Links</h5>
+        <ul>
+          <li><a href="OpenAir-Design.pdf">Design document (PDF)</a></li>
+          <li><a href="#builds">Builds</a></li>
+          <li><a href="#specs">Specifications</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="mailto:hello@openair.craftwisp.com">hello@openair.craftwisp.com</a></li>
+          <li><a href="#docs">Waitlist</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fine">CAD CERN-OHL-S v2 · Firmware MIT · Documentation CC BY 4.0 · Prices in AUD as of 4 October 2026 · CADR and noise figures are engineering estimates until the prototype is measured.</div>
+  </div>
+</footer>
+
+<script>
+// accordions
+document.querySelectorAll('.acc button').forEach(b=>{
+  b.addEventListener('click',()=>b.parentElement.classList.toggle('open'));
+});
+// calm scroll reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+// close mobile menu on click
+document.querySelectorAll('#menu a').forEach(a=>a.addEventListener('click',()=>
+  document.getElementById('menu').classList.remove('open')));
+</script>
+</body>
+</html>

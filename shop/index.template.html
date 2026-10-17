@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenAir Shop — printed parts, kits and components | openair.craftwisp.com</title>
+<meta name="description" content="Buy OpenAir printed in PETG, as a complete kit, fully assembled, or as components. Ships from Melbourne, Australia.">
+<link rel="canonical" href="https://openair.craftwisp.com/shop/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%230e7a6c'/%3E%3Cpath d='M18 26h28M18 34h28M18 42h20' stroke='%23fff' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+:root{--ink:#16232b;--ink-soft:#4d616e;--paper:#f6f8f7;--card:#fff;--accent:#0e7a6c;
+--accent-soft:#e3f2ef;--line:#dde5e3;--amber:#b45f06;--radius:14px;--maxw:1120px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+color:var(--ink);background:var(--paper);line-height:1.55;font-size:16px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+img{max-width:100%;display:block;border-radius:10px}
+nav{position:sticky;top:0;background:rgba(246,248,247,.92);backdrop-filter:blur(8px);
+border-bottom:1px solid var(--line);z-index:50}
+nav .wrap{display:flex;align-items:center;gap:22px;height:62px}
+.logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:20px;color:var(--ink);text-decoration:none}
+.logo svg{width:28px;height:28px}
+nav ul{display:flex;gap:18px;list-style:none;margin-left:auto;align-items:center}
+nav ul a{color:var(--ink-soft);text-decoration:none;font-weight:600;font-size:14.5px}
+nav ul a:hover{color:var(--accent)}
+.cartbtn{background:var(--accent);color:#fff!important;padding:8px 16px;border-radius:8px;font-weight:700;cursor:pointer;border:0;font-size:14px}
+.burger{display:none;margin-left:auto;background:none;border:0;font-size:24px;cursor:pointer}
+header.shop-hero{padding:44px 0 26px}
+header.shop-hero h1{font-size:clamp(26px,4vw,40px);letter-spacing:-.01em}
+header.shop-hero p{color:var(--ink-soft);max-width:760px;margin-top:10px}
+.fulfil{display:flex;gap:14px;flex-wrap:wrap;margin-top:16px}
+.fulfil span{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-size:13px;color:var(--ink-soft)}
+h2.sec{font-size:24px;margin:38px 0 6px}
+p.seclede{color:var(--ink-soft);margin-bottom:18px;font-size:14.5px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid.spares{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
+.card .ph{aspect-ratio:14/10;background:#eef3f1}
+.card .ph img{width:100%;height:100%;object-fit:cover;border-radius:0}
+.card .bd{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card h3{font-size:16.5px}
+.card .sku{font-size:11.5px;color:var(--ink-soft);letter-spacing:.08em}
+.card p{font-size:13.5px;color:var(--ink-soft);flex:1}
+.card .note{font-size:12px;color:var(--amber)}
+.card .row{display:flex;align-items:center;gap:10px;margin-top:4px}
+.price{font-weight:800;font-size:19px;color:var(--accent)}
+.card select{padding:8px;border:1px solid var(--line);border-radius:8px;font-size:13.5px;background:#fff;color:var(--ink)}
+.add{background:var(--ink);color:#fff;border:0;border-radius:8px;padding:9px 14px;font-weight:700;cursor:pointer;font-size:13.5px}
+.add:hover{background:var(--accent)}
+.added{background:var(--accent)!important}
+/* cart drawer */
+#drawer{position:fixed;top:0;right:-420px;width:400px;max-width:92vw;height:100vh;background:#fff;
+box-shadow:-8px 0 30px rgba(0,0,0,.12);transition:right .25s;z-index:80;display:flex;flex-direction:column}
+#drawer.open{right:0}
+#drawer .hd{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+#drawer .items{flex:1;overflow:auto;padding:14px 20px}
+.citem{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.citem .qty{display:flex;align-items:center;gap:8px}
+.citem button{border:1px solid var(--line);background:#fff;border-radius:6px;width:26px;height:26px;cursor:pointer}
+#drawer .tot{padding:14px 20px;border-top:1px solid var(--line);font-size:14.5px}
+#drawer .tot div{display:flex;justify-content:space-between;margin-bottom:6px}
+#drawer .tot .grand{font-weight:800;font-size:17px}
+.checkout{padding:0 20px 20px}
+.checkout details{margin-bottom:12px}
+.checkout summary{cursor:pointer;font-weight:700;font-size:14.5px;color:var(--accent)}
+.checkout label{display:block;font-size:12.5px;color:var(--ink-soft);margin:8px 0 3px}
+.checkout input,.checkout textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;font-size:14px}
+.checkout .pay{width:100%;background:var(--accent);color:#fff;border:0;border-radius:10px;padding:14px;font-size:16px;font-weight:800;cursor:pointer;margin-top:14px}
+.checkout .pay:disabled{background:#9db8b2;cursor:wait}
+.err{color:#b00020;font-size:13.5px;margin-top:8px;display:none}
+.ok-panel{display:none;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);
+border-radius:var(--radius);padding:26px;margin:26px 0}
+.ok-panel h2{color:var(--accent);margin-bottom:8px}
+footer{background:var(--ink);color:#a9bfc4;padding:36px 0 26px;margin-top:56px;font-size:14px}
+footer a{color:#7fd4c4;text-decoration:none}
+footer .fine{margin-top:16px;padding-top:14px;border-top:1px solid #2f4453;font-size:12.5px}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}.grid.spares{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.grid,.grid.spares{grid-template-columns:1fr}
+nav ul{display:none}nav ul.open{display:flex;position:absolute;top:62px;left:0;right:0;background:var(--paper);
+flex-direction:column;padding:14px 22px;border-bottom:1px solid var(--line)}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap">
+    <a class="logo" href="/"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="#0e7a6c"/><path d="M18 26h28M18 34h28M18 42h20" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>OpenAir</a>
+    <button class="burger" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+    <ul id="menu">
+      <li><a href="/">Home</a></li>
+      <li><a href="/#builds">Builds</a></li>
+      <li><a href="/#specs">Specs</a></li>
+      <li><a href="/#faq">FAQ</a></li>
+      <li><button class="cartbtn" onclick="toggleDrawer()">Cart (<span id="cartN">0</span>)</button></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div id="paidPanel" class="ok-panel">
+    <h2>Payment received — thank you!</h2>
+    <p>Your order <strong id="paidId"></strong> is confirmed. You'll get an email shortly with what happens next: printed parts go into the print queue, electronics are bench-tested before shipping. Typical fulfilment: <strong>2–4 weeks</strong>.</p>
+  </div>
+  <div id="cancelPanel" class="ok-panel" style="border-left-color:var(--amber)">
+    <h2>Checkout cancelled</h2>
+    <p>No payment was taken. Your cart is saved — open the cart and try again whenever you're ready.</p>
+  </div>
+
+  <header class="shop-hero">
+    <h1>OpenAir Shop</h1>
+    <p>No 3D printer? No problem. We print the parts on our machines, source and bench-test the electronics, and ship from Melbourne. Or buy just the components you need.</p>
+    <div class="fulfil">
+      <span>📦 Ships from Epping VIC 3076</span>
+      <span>🚚 $12 tracked postage · free over $300 · free pickup</span>
+      <span>🎨 PETG colour choice at checkout</span>
+      <span>🔧 Electronics bench-tested before shipping</span>
+    </div>
+  </header>
+
+  <h2 class="sec">Kits & printed parts</h2>
+  <p class="seclede">CAD renders shown; your parts arrive printed in PETG. Assembly guide and firmware flashing instructions included with every order.</p>
+  <div class="grid" id="prodGrid"></div>
+
+  <h2 class="sec">Spares & components</h2>
+  <p class="seclede">Already printing your own? These are the exact parts the design uses.</p>
+  <div class="grid spares" id="spareGrid"></div>
+</div>
+
+<div id="drawer">
+  <div class="hd"><strong>Your cart</strong><button class="add" onclick="toggleDrawer()">Close</button></div>
+  <div class="items" id="cartItems"></div>
+  <div class="tot">
+    <div><span>Subtotal</span><span id="tSub"></span></div>
+    <div><span>Postage</span><span id="tShip"></span></div>
+    <div class="grand"><span>Total</span><span id="tGrand"></span></div>
+  </div>
+  <div class="checkout">
+    <details open><summary>Checkout details</summary>
+      <label>Name *</label><input id="fName" placeholder="First and last name">
+      <label>Email *</label><input id="fEmail" type="email" placeholder="you@example.com">
+      <label>Phone</label><input id="fPhone" placeholder="optional">
+      <label>Delivery</label>
+      <select id="fDelivery" onchange="renderCart()">
+        <option value="post">Post (tracked, $12 — free over $300)</option>
+        <option value="pickup">Pickup in Epping VIC 3076 (free)</option>
+      </select>
+      <div id="addrFields">
+        <label>Street *</label><input id="fStreet">
+        <label>Suburb *</label><input id="fSuburb">
+        <label>Postcode *</label><input id="fPostcode" inputmode="numeric">
+        <label>State</label><input id="fState" placeholder="VIC" value="VIC">
+      </div>
+      <label>Notes (colour preferences, questions)</label><textarea id="fNotes" rows="2"></textarea>
+    </details>
+    <div class="err" id="cartErr"></div>
+    <button class="pay" id="payBtn" onclick="checkout()">Pay with Stripe →</button>
+    <p style="font-size:12px;color:var(--ink-soft);margin-top:8px">You'll be redirected to Stripe's secure checkout (card / Apple Pay / Google Pay). Orders are confirmed by email.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>OpenAir · designed in Melbourne · <a href="/">project page</a> · <a href="/OpenAir-Design.pdf">design document</a> · <a href="mailto:hello@openair.craftwisp.com">hello@openair.craftwisp.com</a></p>
+    <div class="fine">Prices in AUD. Printed parts are PETG, colour as selected. CADR figures are engineering estimates until the prototype is measured — measured values will be published. Fulfilment starts from order; printed parts typically ship within 2–4 weeks.</div>
+  </div>
+</footer>
+
+<script>
+const CATALOG = __CATALOG__;
+const WEBHOOK = "https://flown8n.aleespohome.com/webhook/openair-order";
+const LS_KEY = "openai…t-v1";
+let cart = JSON.parse(localStorage.getItem(LS_KEY) || "[]");
+
+function money(n){ return "$" + n.toFixed(2); }
+function save(){ localStorage.setItem(LS_KEY, JSON.stringify(cart)); }
+
+function renderCatalog(){
+  const mk = (p, grid) => {
+    const el = document.createElement("div"); el.className = "card";
+    el.innerHTML = `<div class="ph"><img src="${p.img}" alt="${p.name}" loading="lazy"></div>
+      <div class="bd"><div class="sku">${p.sku}</div><h3>${p.name}</h3><p>${p.desc}</p>
+      ${p.note ? `<div class="note">${p.note}</div>` : ""}
+      <div class="row"><span class="price">${money(p.price)}</span>
+      ${p.colours && p.colours.length ? `<select id="col-${p.sku}">${p.colours.map(c=>`<option>${c}</option>`).join("")}</select>` : ""}
+      <button class="add" onclick="addToCart('${p.sku}')">Add</button></div></div>`;
+    grid.appendChild(el);
+  };
+  CATALOG.products.forEach(p => mk(p, document.getElementById("prodGrid")));
+  CATALOG.spares.forEach(p => mk(p, document.getElementById("spareGrid")));
+}
+
+function findSku(sku){ return CATALOG.products.concat(CATALOG.spares).find(p=>p.sku===sku); }
+
+function addToCart(sku){
+  const p = findSku(sku);
+  const colEl = document.getElementById("col-"+sku);
+  const colour = colEl ? colEl.value : null;
+  const key = sku + "|" + (colour||"");
+  const ex = cart.find(i=>i.key===key);
+  if (ex) ex.qty++;
+  else cart.push({key, sku, name:p.name, unitPrice:p.price, colour, qty:1});
+  save(); renderCart();
+  const btns = document.querySelectorAll(".add");
+  btns.forEach(b=>{ if(b.onclick && b.getAttribute("onclick")===`addToCart('${sku}')`){
+    b.classList.add("added"); b.textContent="Added ✓";
+    setTimeout(()=>{b.classList.remove("added"); b.textContent="Add";},1200);
+  }});
+  if (cart.length===1) toggleDrawer(true);
+}
+
+function changeQty(key, d){
+  const it = cart.find(i=>i.key===key); if(!it) return;
+  it.qty += d; if (it.qty<=0) cart = cart.filter(i=>i.key!==key);
+  save(); renderCart();
+}
+
+function totals(){
+  const sub = cart.reduce((s,i)=>s+i.unitPrice*i.qty,0);
+  const delivery = document.getElementById("fDelivery").value;
+  const ship = (delivery==="post" && sub>0 && sub < CATALOG.shipping.free_over) ? CATALOG.shipping.flat : 0;
+  return {sub, ship, total: sub+ship, delivery};
+}
+
+function renderCart(){
+  document.getElementById("cartN").textContent = cart.reduce((s,i)=>s+i.qty,0);
+  const box = document.getElementById("cartItems");
+  box.innerHTML = cart.map(i=>`<div class="citem"><div><strong>${i.name}</strong>${i.colour?`<br><small>${i.colour}</small>`:""}</div>
+    <div class="qty"><button onclick="changeQty('${i.key}',-1)">−</button><span>${i.qty}</span><button onclick="changeQty('${i.key}',1)">+</button><span style="min-width:64px;text-align:right">${money(i.unitPrice*i.qty)}</span></div></div>`).join("")
+    || `<p style="color:var(--ink-soft)">Cart is empty.</p>`;
+  const t = totals();
+  document.getElementById("tSub").textContent = money(t.sub);
+  document.getElementById("tShip").textContent = t.delivery==="pickup" ? "pickup" : (t.ship ? money(t.ship) : "FREE");
+  document.getElementById("tGrand").textContent = money(t.total);
+  document.getElementById("addrFields").style.display = t.delivery==="post" ? "block" : "none";
+}
+
+function toggleDrawer(force){
+  const d = document.getElementById("drawer");
+  if (force===true) d.classList.add("open"); else d.classList.toggle("open");
+}
+
+function showErr(msg){ const e=document.getElementById("cartErr"); e.textContent=msg; e.style.display="block"; }
+
+async function checkout(){
+  document.getElementById("cartErr").style.display="none";
+  if (!cart.length) return showErr("Your cart is empty.");
+  const name = document.getElementById("fName").value.trim();
+  const email = document.getElementById("fEmail").value.trim();
+  const delivery = document.getElementById("fDelivery").value;
+  if (!name || !email) return showErr("Name and email are required.");
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return showErr("Please enter a valid email.");
+  let address = null;
+  if (delivery==="post"){
+    const street=document.getElementById("fStreet").value.trim(), suburb=document.getElementById("fSuburb").value.trim(),
+          postcode=document.getElementById("fPostcode").value.trim(), state=document.getElementById("fState").value.trim();
+    if (!street||!suburb||!postcode) return showErr("Street, suburb and postcode are required for postage.");
+    address = {street, suburb, postcode, state};
+  }
+  const t = totals();
+  const payload = {
+    items: cart.map(i=>({name:i.name, qty:i.qty, unitPrice:i.unitPrice, colour:i.colour, sku:i.sku})),
+    customer: {firstName:name, email, phone: document.getElementById("fPhone").value.trim()},
+    delivery, address, notes: document.getElementById("fNotes").value.trim(),
+    totals: {subtotal:t.sub, shipping:t.ship, total:t.total}
+  };
+  const btn = document.getElementById("payBtn");
+  btn.disabled = true; btn.textContent = "Creating secure checkout…";
+  try {
+    const r = await fetch(WEBHOOK, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload)});
+    const d = await r.json();
+    if (d.success && d.paymentUrl){
+      localStorage.removeItem(LS_KEY); cart=[]; renderCart();
+      location.href = d.paymentUrl;
+      return;
+    }
+    showErr(d.error || "Could not start checkout — please try again or email hello@openair.craftwisp.com.");
+  } catch(e){
+    showErr("Network error starting checkout — try again, or email hello@openair.craftwisp.com.");
+  }
+  btn.disabled=false; btn.textContent="Pay with Stripe →";
+}
+
+// URL state: ?paid=1&order=… / ?cancelled=1
+(function(){
+  const q = new URLSearchParams(location.search);
+  if (q.get("paid")){
+    document.getElementById("paidId").textContent = q.get("order") || "";
+    document.getElementById("paidPanel").style.display="block";
+    window.scrollTo(0,0);
+  }
+  if (q.get("cancelled")){ document.getElementById("cancelPanel").style.display="block"; window.scrollTo(0,0); }
+})();
+
+renderCatalog(); renderCart();
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+# Estate-local ops runbook — not part of the published project
+OPS.md
+
+# Internal shop tooling and cost/pricing data (cogs, margins) — never publish
+scripts/
+data/
+
+# Internal working artifact (PDF page contact sheet)
+contact_sheet.png
+
+# Python / OS cruft
+__pycache__/
+*.pyc
+.DS_Store

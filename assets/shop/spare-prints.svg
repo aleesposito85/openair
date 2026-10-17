@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1000">
+<rect width="1400" height="1000" fill="#eef3f1"/>
+<rect x="60" y="60" width="1280" height="880" rx="28" fill="#ffffff" stroke="#dde5e3" stroke-width="3"/>
+<g transform="translate(700,430)" stroke="#0e7a6c" stroke-width="14" fill="none" stroke-linecap="round"><path d="M-140 120 L-140 -60 L-40 -120 L-40 120 Z"/><path d="M40 120 L40 -120 L140 -60 L140 120 Z"/><path d="M-140 -60 L40 -120M-40 -120 L140 -60"/></g>
+<text x="700" y="760" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="52" font-weight="700" fill="#16232b">Printed Spares Set</text>
+<text x="700" y="820" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="30" fill="#4d616e">Shells · base · grille</text>
+<circle cx="700" cy="180" r="52" fill="#0e7a6c"/>
+<path d="M676 168h48M676 184h48M676 200h34" stroke="#fff" stroke-width="9" stroke-linecap="round" fill="none"/>
+</svg>
